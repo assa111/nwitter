@@ -1,4 +1,4 @@
-import { dbService } from 'fbase';
+import { dbService, storageService } from 'fbase';
 import React, { useState } from 'react';
 
 const Nweet = ({nweetObj,isOwner}) =>{  // 소유자? yes => delete,edit
@@ -11,7 +11,8 @@ const Nweet = ({nweetObj,isOwner}) =>{  // 소유자? yes => delete,edit
         if(ok) {
             var docptah = "nweets/" + nweetObj.id;  // path 로 접근하여 지운다
             console.log(docptah);
-            await dbService.doc(docptah).delete();
+            await dbService.doc(docptah).delete();                              // firestore delete
+            await storageService.refFromURL(nweetObj.attachmentUrl).delete(); // storage delete
             
 
         }
@@ -50,7 +51,8 @@ const Nweet = ({nweetObj,isOwner}) =>{  // 소유자? yes => delete,edit
         :
         // Normal mode
         <>                                                       
-         <h4>{nweetObj.text}</h4>                               
+         <h4>{nweetObj.text}</h4>
+        {nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} width="50px" height="50px" />}                                 
         {isOwner && (
             <>
             <button onClick={onDelectClck}>Delete Nweet</button>
