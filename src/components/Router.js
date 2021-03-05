@@ -5,12 +5,13 @@ import Home from '../routes/Home';
 import Navigation from 'components/Navigation';
 import Profile from 'routes/Profile';
 
- const AppRouter =({isLoggedIn, userObj})=>{
+ const AppRouter =({refreshUser,isLoggedIn, userObj})=>{
     console.log({isLoggedIn});
     return (
         
     <Router> 
-        {isLoggedIn && <Navigation />}
+        {/* user 의 이름을 Profile 자리에 표시 위해 */}
+        {isLoggedIn && <Navigation userObj={userObj} />} 
     <Switch>
         {isLoggedIn?(
         <>
@@ -18,7 +19,7 @@ import Profile from 'routes/Profile';
                 <Home userObj={userObj} />
             </Route>
             <Route exact path="/profile">
-                <Profile />
+                <Profile userObj={userObj} refreshUser={refreshUser} />
             </Route>
             {/* <Redirect from="*" to="/" /> */}
         </>):(
