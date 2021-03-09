@@ -14,15 +14,18 @@ function App() {
     authService.onAuthStateChanged((user)=>{
       if(user) { // currentUser 가 있으면 
         setIsLoggedIn(true);
+        console.log(isLoggedIn);
         //setUserObj(user);   // user id 의 저장을 위해 
         setUserObj({    // 필요한 부분만 저장 why 너무 길어 지면 react 가 비교하지 못한다.
           displayName:user.displayName,
           uid: user.uid,
           updateProfile: (args) => user.updateProfile(args), // function 을 저장하기 위해
         });
+        console.log(user.displayName);
       }
       else {
         setIsLoggedIn(false);
+        setUserObj(null);
       }
       setInit(true);
       console.log(user);
@@ -38,12 +41,14 @@ function App() {
       updateProfile: (args) => user.updateProfile(args), // function 을 저장하기 위해
     });    
   };
+  //console.log(userObj.displayName);
   return (
+    
     <>
     {/* <AppRouter in isLoggedIn={isLoggedIn} /> */}
     {init?<AppRouter 
         refreshUser = {refreshUser}
-        isLoggedIn={isLoggedIn} 
+        isLoggedIn={Boolean(userObj)}
         userObj={userObj} 
         />:"Initializing..."}  
     <footer>&copy;JANG {new Date().getFullYear()} Nwitter</footer>

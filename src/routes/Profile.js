@@ -9,7 +9,7 @@ export default ({refreshUser,userObj}) => {
     const [newDisplayName,setNewDisplayName] = useState(userObj.displayName);
     const onLogOutClick = () => {
         authService.signOut();
-        history.push("/");
+        history.push("/");  
     };
     const getMyNweets = async() => { // ID 가 나 => nweet 가져오기
         const nweets = await dbService.collection("nweets")     // firestore query 방법 예제
